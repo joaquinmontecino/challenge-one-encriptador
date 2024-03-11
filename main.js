@@ -7,6 +7,7 @@ let outputDefault = document.getElementsByClassName("output_vacio");
 let outputCompleto = document.getElementsByClassName("output_completo");
 
 
+
 function esSoloMinusculasYÑ(texto) {
     for (let i = 0; i < texto.length; i++) {
       const charCode = texto.charCodeAt(i);
@@ -17,19 +18,25 @@ function esSoloMinusculasYÑ(texto) {
     return true;
   }
 
+function mostrarAlerta(mensaje, tiempo){
+    let alerta = document.getElementsByClassName("alerta")[0];
+    alerta.innerHTML = mensaje;
+    alerta.style.opacity = 1;
+    setTimeout(() => {
+        alerta.style.opacity = 0;
+    }, tiempo)
+}
+
 function verificarTextoValido(texto){
     if (texto == ""){
-        //aviso de que está vacio
-        //console.log("vacio");
+        mostrarAlerta("El campo de texto se encuentra vacio, por favor ingrese texto.", 2500);
         return false;
     }
     if (!esSoloMinusculasYÑ(texto)) {
-        // aviso de que tiene mayúsculas o símbolos
-        //console.log("simbolo");
+        mostrarAlerta("Por favor, tan solo utilice minusculas. No se permiten mayusculas, ni tildes, ni simbolos especiales.", 3500);
         return false;
     }
     else{
-        //console.log("good");
         return true;
     }
 
@@ -69,6 +76,7 @@ function desencriptar(){
 
 function copiar(){
     navigator.clipboard.writeText(textoOutput.value);
+    mostrarAlerta("Texto copiado.", 750)
 }
 
 botonEncriptado.onclick = encriptar;
